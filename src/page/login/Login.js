@@ -1,3 +1,4 @@
+import React, { useEffect } from "react";
 import React from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
@@ -6,6 +7,7 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import ButtonComponent from "../../components/ButtonComponent";
+import { BsFillFilePersonFill } from "react-icons/bs";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -13,10 +15,13 @@ export default function Login() {
   const [count, setCount] = useState(0);
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
-
   const OnLogin = () => {
     setEmail(email);
     setPassword(password);
+  };
+  const setLocalStorage = () => {
+    localStorage.setItem("email", email);
+    localStorage.setItem("password", password);
   };
 
   return (
@@ -86,6 +91,14 @@ export default function Login() {
         Register
       </Button>
       &emsp;
+      <Button as="a" variant="primary" onClick={() => setLocalStorage()}>
+        Save to localStorage
+      </Button>
+      &emsp;
+      <Button as="a" variant="primary" onClick={() => localStorage.clear()}>
+        Delete localStorage
+      </Button>
+      &emsp;
       <ButtonComponent
         title={"Register"}
         background={"Black"}
@@ -93,6 +106,10 @@ export default function Login() {
         height={30}
         onClick={() => navigate("/username")}
       />
+      &emsp;
+      <BsFillFilePersonFill size={50} />
+      {localStorage.getItem("email")}
+      {localStorage.getItem("password")}
       &emsp;
     </div>
   );
